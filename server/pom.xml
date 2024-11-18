@@ -5,59 +5,56 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>my-webapp</artifactId>
+    <artifactId>my-app</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging> <!-- Specify war packaging -->
+    <packaging>war</packaging>
 
+    <!-- Dependencies for the application (example Spring MVC) -->
     <dependencies>
-        <!-- Servlet API, provided by the container, so it's marked as "provided" scope -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.3.12</version>
         </dependency>
 
-        <!-- JSP API, if you're using JSP in your web app -->
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.3</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- JUnit for testing (optional) -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- Add any other dependencies your app requires -->
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Maven plugin to build the WAR file -->
+            <!-- Maven WAR Plugin for building the WAR artifact -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
                 <configuration>
-                    <warName>my-webapp</warName> <!-- Optional, set the name of the .war -->
+                    <!-- Optional: configure the output directory of the WAR file -->
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <warName>my-app</warName> <!-- This will generate my-app.war -->
                 </configuration>
             </plugin>
 
-            <!-- Optional: maven-compiler-plugin for compiling Java sources -->
+            <!-- Maven Tomcat Plugin to deploy the WAR to Tomcat -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId> <!-- or use tomcat9-maven-plugin if using Tomcat 9 -->
+                <version>2.2</version> <!-- Choose the version compatible with your Tomcat -->
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <url>http://localhost:8080/manager/text</url> <!-- Tomcat manager URL -->
+                    <server>tomcat-server</server> <!-- Server ID from settings.xml -->
+                    <path>/my-app</path> <!-- The context path in Tomcat (can be the name of your app) -->
+                    <username>admin</username> <!-- Tomcat manager username -->
+                    <password>adminpassword</password> <!-- Tomcat manager password -->
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>tomcat-repo</id>
+            <url>http://localhost:8080/repository/your-repo/</url> <!-- Optional, for uploading to Tomcat repository -->
+        </repository>
+    </distributionManagement>
 
 </project>
