@@ -37,14 +37,14 @@
             <!-- Maven Tomcat Plugin to deploy the WAR to Tomcat -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId> <!-- or use tomcat9-maven-plugin if using Tomcat 9 -->
+                <artifactId>tomcat9-maven-plugin</artifactId> <!-- or use tomcat9-maven-plugin if using Tomcat 9 -->
                 <version>2.2</version> <!-- Choose the version compatible with your Tomcat -->
                 <configuration>
-                    <url>http://localhost:8080/manager/text</url> <!-- Tomcat manager URL -->
+                    <url>http://172.31.23.109:8080/manager/text</url> <!-- Tomcat manager URL -->
                     <server>tomcat-server</server> <!-- Server ID from settings.xml -->
-                    <path>/my-app</path> <!-- The context path in Tomcat (can be the name of your app) -->
-                    <username>admin</username> <!-- Tomcat manager username -->
-                    <password>adminpassword</password> <!-- Tomcat manager password -->
+                    <path>//home/ubuntu/.jenkins/workspace/dev/target/my-webapp.war</path> <!-- The context path in Tomcat (can be the name of your app) -->
+                    <username>bobby</username> <!-- Tomcat manager username -->
+                    <password>samhirsamhir</password> <!-- Tomcat manager password -->
                 </configuration>
             </plugin>
         </plugins>
